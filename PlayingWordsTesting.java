@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 //   0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 
 // 0     H
 // 1     E L E G A N T
@@ -7,19 +8,19 @@ import java.util.ArrayList;
 // 3     L
 // 4     O C T O B E R
 // 5                 A
-// 6                 C
+// 6     A T T     A C H
 // 7                 I            T
-// 8               K N I G H T    H
-// 9                 G            I 
-// 10        P A C T S            N
-// 11              A              G
-// 12        L     R T            S
+// 8  B            K N I G H T    H
+// 9  L              G            I 
+// 10 A      P A C T S      E V A N S
+// 11 N            A              G
+// 12 _      L     R T            S
 // 13                  C G
 // 14  T E S T  
 
 class PlayingWordsTesting {
 
-    private static Player player = new Player("Alicia", TileLetter.createFullBag());
+    private static Player player = new Player("Testing", TileLetter.createFullBag());
     private static Board gameBoard = Board.initializeBoard();
 
     private static ArrayList<SquareOnBoard> HELLO = createTestWordInSquares("HELLO", 2, 0, false);
@@ -32,6 +33,28 @@ class PlayingWordsTesting {
     private static ArrayList<SquareOnBoard> CAT = createCAT();
     private static ArrayList<SquareOnBoard> LRTCG = createLRTCG();
     private static ArrayList<SquareOnBoard> TEST = createTestWordInSquares("TEST", 1, 14, true);
+    private static ArrayList<SquareOnBoard> LET = createLET();
+    private static ArrayList<SquareOnBoard> NOW = createTestWordInSquares("NOW", 8, 14, true);
+    private static ArrayList<SquareOnBoard> ATTACH = createATTACH();
+    private static ArrayList<SquareOnBoard> EVANS = createTestWordInSquares("EVANS", 10, 10, true);
+    private static ArrayList<SquareOnBoard> BLANK = createTestWordInSquares("BLANK", 0, 8, false);
+
+    private static ArrayList<SquareOnBoard> createATTACH(){
+        ArrayList<SquareOnBoard> ATTACH = new ArrayList<>();
+
+        SquareOnBoard a = new SquareOnBoard(new TileLetter("A"), 1, 1, 4, 2);
+        SquareOnBoard t = new SquareOnBoard(new TileLetter("T"), 1, 1, 4, 3);
+        SquareOnBoard t2 = new SquareOnBoard(new TileLetter("T"), 1, 1,4, 4);
+        SquareOnBoard a2 = new SquareOnBoard(new TileLetter("A"), 2, 1, 4, 7);
+        SquareOnBoard h = new SquareOnBoard(new TileLetter("H"), 1, 2, 4, 8);
+
+        ATTACH.add(a);
+        ATTACH.add(t);
+        ATTACH.add(t2);
+        ATTACH.add(a2);
+        ATTACH.add(h);
+        return ATTACH;
+    }
 
     private static ArrayList<SquareOnBoard> createCAT(){
         ArrayList<SquareOnBoard> CAT = new ArrayList<>();
@@ -43,6 +66,12 @@ class PlayingWordsTesting {
         CAT.add(a);
         CAT.add(t);
         return CAT;
+    }
+
+    private static ArrayList<SquareOnBoard> createLET(){
+        ArrayList<SquareOnBoard> LET = new ArrayList<>();
+        LET.add(new SquareOnBoard(new TileLetter("E"), 1, 1, 4, 13));
+        return LET;
     }
 
     private static ArrayList<SquareOnBoard> createLRTCG(){
@@ -61,7 +90,6 @@ class PlayingWordsTesting {
         return LRTCG;
     }
     
-
     static PlayingWords hello = new PlayingWords(HELLO, gameBoard, player);
     static PlayingWords elegant = new PlayingWords(ELEGANT, gameBoard, player);
     static PlayingWords october = new PlayingWords(OCTOBER, gameBoard, player);
@@ -72,7 +100,11 @@ class PlayingWordsTesting {
     static PlayingWords cat = new PlayingWords(CAT, gameBoard, player);
     static PlayingWords lrtcg = new PlayingWords(LRTCG, gameBoard, player);
     static PlayingWords test = new PlayingWords(TEST, gameBoard, player);
-
+    static PlayingWords let = new PlayingWords(LET, gameBoard, player);
+    static PlayingWords now = new PlayingWords(NOW, gameBoard, player);
+    static PlayingWords attach = new PlayingWords(ATTACH, gameBoard, player);
+    static PlayingWords evans = new PlayingWords(EVANS, gameBoard, player);
+    static PlayingWords blank = new PlayingWords(BLANK, gameBoard, player);
 
     private static ArrayList<SquareOnBoard> createTestWordInSquares(String word, int startingX, int startingY, boolean right){ //if right is true the word moves from left to right instead of up to down
         Board blankBoard = Board.initializeBoard();
@@ -97,33 +129,24 @@ class PlayingWordsTesting {
     }
 
     private static void resetValidity(){
-        hello.setValidity(true);
-        elegant.setValidity(true);
-        october.setValidity(true);
-        racing.setValidity(true);
-        knight.setValidity(true);
-        things.setValidity(true);
-        pacts.setValidity(true);
-        cat.setValidity(true);
-        lrtcg.setValidity(true);
-        test.setValidity(true);
+        hello.setValid(true);
+        elegant.setValid(true);
+        october.setValid(true);
+        racing.setValid(true);
+        knight.setValid(true);
+        things.setValid(true);
+        pacts.setValid(true);
+        cat.setValid(true);
+        lrtcg.setValid(true);
+        test.setValid(true);
+        let.setValid(true);
+        now.setValid(true);
+        attach.setValid(true);
+        evans.setValid(true);
     }
 
-    //TESTBOARD SHOULD BE DELETED WHEN IM FINISHED
-    static Board testBoard(){
-        Board newBoard = Board.initializeBoard();
-        Board.addWordToBoard(newBoard, HELLO);
-        Board.addWordToBoard(newBoard, ELEGANT);
-        Board.addWordToBoard(newBoard, OCTOBER);
-        Board.addWordToBoard(newBoard, RACING);
-        Board.addWordToBoard(newBoard, KNIGHT);
-        Board.addWordToBoard(newBoard, THINGS);
-        Board.addWordToBoard(newBoard, PACTS);
-        Board.addWordToBoard(newBoard, CAT);
-        Board.addWordToBoard(newBoard, LRTCG);
-        Board.addWordToBoard(newBoard, TEST);
-
-        return newBoard;
+    static void testGenerateWordList(){
+        System.out.println(PlayingWords.generateWordList()); // 25463 words
     }
     
     static void testCheckRack(){
@@ -140,17 +163,51 @@ class PlayingWordsTesting {
         rack.add(new TileLetter("C"));
         rack.add(new TileLetter("A"));
         rack.add(new TileLetter("S"));
+        rack.add(new TileLetter("B"));
+        rack.add(new TileLetter("N"));
+        rack.add(new TileLetter(" "));
         
         hello.checkRack();
-        System.out.println(hello.getValidity()); // true
+        System.out.println(hello.getIsValid()); // true
         cat.checkRack();
-        System.out.println(cat.getValidity()); // true
-        test.checkRack();
-        System.out.println(test.getValidity()); // false
+        System.out.println(cat.getIsValid()); // true
+        knight.checkRack();
+        System.out.println(knight.getIsValid()); // false
         pacts.checkRack();
-        System.out.println(pacts.getValidity()); // true
+        System.out.println(pacts.getIsValid()); // true
         elegant.checkRack();
-        System.out.println(elegant.getValidity()); // false
+        System.out.println(elegant.getIsValid()); // false
+        blank.checkRack();
+        System.out.println(blank.getIsValid());
+    }
+
+    static void testCheckOnTopOfExisting(){
+        Board testBoard = Board.initializeBoard();
+        Board.addWordToBoard(testBoard, HELLO);
+        Board.addWordToBoard(testBoard, OCTOBER);
+        Board.addWordToBoard(testBoard, PACTS);
+        Board.addWordToBoard(testBoard, CAT);
+        Board.addWordToBoard(testBoard, LRTCG);
+
+        test.setOldBoard(testBoard);
+        test.checkOnTopOfExisting();
+        System.out.println(test.getIsValid()); // true
+        racing.setOldBoard(testBoard);
+        racing.checkOnTopOfExisting();
+        System.out.println(racing.getIsValid()); // false
+        knight.setOldBoard(testBoard);
+        knight.checkOnTopOfExisting();
+        System.out.println(knight.getIsValid()); // true
+        elegant.setOldBoard(testBoard);
+        elegant.checkOnTopOfExisting(); 
+        System.out.println(elegant.getIsValid()); // false
+        things.setOldBoard(testBoard);
+        things.checkOnTopOfExisting();
+        System.out.println(things.getIsValid()); // true
+        blank.setOldBoard(testBoard);
+        blank.checkOnTopOfExisting();
+        System.out.println(blank.getIsValid()); // true
+
     }
 
     static void testCheckAllRLUP(){
@@ -162,100 +219,164 @@ class PlayingWordsTesting {
         Board.addWordToBoard(testBoard, CAT);
         Board.addWordToBoard(testBoard, LRTCG);
 
-        test.setWordBoard(testBoard);
+        test.setOldBoard(testBoard);
         test.checkAllRLUP();
-        System.out.println(test.getValidity()); // false
-        racing.setWordBoard(testBoard);
+        System.out.println(test.getIsValid()); // false
+        racing.setOldBoard(testBoard);
         racing.checkAllRLUP();
-        System.out.println(racing.getValidity()); // true
-        knight.setWordBoard(testBoard);
+        System.out.println(racing.getIsValid()); // true
+        knight.setOldBoard(testBoard);
         knight.checkAllRLUP();
-        System.out.println(knight.getValidity()); // false
-        elegant.setWordBoard(testBoard);
+        System.out.println(knight.getIsValid()); // false
+        elegant.setOldBoard(testBoard);
         elegant.checkAllRLUP(); 
-        System.out.println(elegant.getValidity()); // true
-        things.setWordBoard(testBoard);
+        System.out.println(elegant.getIsValid()); // true
+        things.setOldBoard(testBoard);
         things.checkAllRLUP();
-        System.out.println(things.getValidity()); // false
+        System.out.println(things.getIsValid()); // false
+        blank.setOldBoard(testBoard);
+        blank.checkAllRLUP();
+        System.out.println(blank.getIsValid()); // false
     }
 
     static void testCheckLettersInRow(){
         resetValidity();
         racing.checkLettersInRow();
-        System.out.println(racing.getValidity()); // true
+        System.out.println(racing.getIsValid()); // true
         things.checkLettersInRow();
-        System.out.println(things.getValidity()); // true
+        System.out.println(things.getIsValid()); // true
         cat.checkLettersInRow();
-        System.out.println(cat.getValidity()); // false
+        System.out.println(cat.getIsValid()); // false
         hello.checkLettersInRow();
-        System.out.println(hello.getValidity()); // true
+        System.out.println(hello.getIsValid()); // true
         lrtcg.checkLettersInRow();
-        System.out.println(lrtcg.getValidity()); // false
+        System.out.println(lrtcg.getIsValid()); // false
+        let.checkLettersInRow();
+        System.out.println(let.getIsValid()); // true
+        attach.checkLettersInRow();
+        System.out.println(attach.getIsValid()); // false (Same row but not in consecutive order)
+        evans.checkLettersInRow();
+        System.out.println(evans.getIsValid()); // true
+
+
     }
 
     static void testValidateBoard(){
         resetValidity();
         Board newBoard = Board.initializeBoard();
         Board.addWordToBoard(newBoard, HELLO);
-        hello.setWordBoard(newBoard);
+        hello.setNewBoard(newBoard);
         hello.validateBoard();
-        System.out.println(hello.getValidity()); // true
+        System.out.println(hello.getIsValid()); // true
 
         Board.addWordToBoard(newBoard, ELEGANT);
-        elegant.setWordBoard(newBoard);
+        elegant.setNewBoard(newBoard);
         elegant.validateBoard();
-        System.out.println(elegant.getValidity()); // true
+        System.out.println(elegant.getIsValid()); // true
 
         Board.addWordToBoard(newBoard, OCTOBER);
-        october.setWordBoard(newBoard);
+        october.setNewBoard(newBoard);
         october.validateBoard();
-        System.out.println(october.getValidity()); // true
+        System.out.println(october.getIsValid()); // true
 
         Board falseBoard = newBoard.clone();
-        System.out.println(falseBoard.equals(newBoard) + "hrejwkjhrwkh");
-
         Board.addWordToBoard(falseBoard, RACING); 
-        racing.setWordBoard(falseBoard);
+        racing.setNewBoard(falseBoard);
         racing.validateBoard();
-        System.out.println(racing.getValidity()); // false (racing is not in the words txt file)
+        System.out.println(racing.getIsValid()); // false (racing is not in the words.txt file)
         
-        //Board.removeWordFromBoard(newBoard, RACING);
-        System.out.println(newBoard);
         Board.addWordToBoard(newBoard, KNIGHT);
-        knight.setWordBoard(newBoard);
+        knight.setNewBoard(newBoard);
         knight.validateBoard();
-        System.out.println(knight.getValidity()); // true
+        System.out.println(knight.getIsValid()); // true
 
-        Board.addWordToBoard(newBoard, THINGS);
-        things.setWordBoard(newBoard);
+        falseBoard = newBoard.clone();
+        Board.addWordToBoard(falseBoard, THINGS);
+        things.setNewBoard(falseBoard);
         things.validateBoard();
-        System.out.println(things.getValidity()); // true
+        System.out.println(things.getIsValid()); // false (things is not in the words.txt file)
 
-        Board.addWordToBoard(newBoard, PACTS);
-        pacts.setWordBoard(newBoard);
+        falseBoard = newBoard.clone();
+        Board.addWordToBoard(falseBoard, PACTS);
+        pacts.setNewBoard(falseBoard);
         pacts.validateBoard();
-        System.out.println(pacts.getValidity()); // true
+        System.out.println(pacts.getIsValid()); // false (pacts is not in the words.txt file)
 
         Board.addWordToBoard(newBoard, CAT);
-        cat.setWordBoard(newBoard);
+        cat.setNewBoard(newBoard);
         cat.validateBoard();
-        System.out.println(cat.getValidity()); // true
+        System.out.println(cat.getIsValid()); // true
 
-        Board.addWordToBoard(newBoard, LRTCG);
-        lrtcg.setWordBoard(newBoard);
+        falseBoard = newBoard.clone();
+        Board.addWordToBoard(falseBoard, LRTCG);
+        lrtcg.setNewBoard(falseBoard);
         lrtcg.validateBoard();
-        System.out.println(lrtcg.getValidity()); // true
+        System.out.println(lrtcg.getIsValid()); // false (Split on multiple lines and not a word)
 
         Board.addWordToBoard(newBoard, TEST);
-        test.setWordBoard(newBoard);
+        test.setNewBoard(newBoard);
         test.validateBoard();
-        System.out.println(test.getValidity()); // true
+        System.out.println(test.getIsValid()); // true
+
+        Board.addWordToBoard(newBoard, NOW);
+        now.setNewBoard(newBoard);
+        now.validateBoard();
+        System.out.println(now.getIsValid()); // true
+    }
+
+    static void testCountPoints(){
+        resetValidity();
+        Board newBoard = Board.initializeBoard();
+        Board oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, HELLO);
+        hello.setNewBoard(newBoard);
+        hello.setOldBoard(oldBoard);
+        System.out.println(hello.countPoints()); // 16
+
+        oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, OCTOBER);
+        october.setNewBoard(newBoard);
+        october.setOldBoard(oldBoard);
+        System.out.println(october.countPoints()); // 72 (With 50 point bonus for all 7 letters)
+
+        oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, RACING);
+        racing.setNewBoard(newBoard);
+        racing.setOldBoard(oldBoard);
+        System.out.println(racing.countPoints()); // 13
+
+        oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, PACTS);
+        pacts.setNewBoard(newBoard);
+        pacts.setOldBoard(oldBoard);
+        System.out.println(pacts.countPoints()); // 28
+
+        oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, THINGS);
+        things.setNewBoard(newBoard);
+        things.setOldBoard(oldBoard);
+        System.out.println(things.countPoints()); // 12
+
+        oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, KNIGHT);
+        knight.setNewBoard(newBoard);
+        knight.setOldBoard(oldBoard);
+        System.out.println(knight.countPoints()); // 20
+
+        oldBoard = newBoard.clone();
+        Board.addWordToBoard(newBoard, NOW);
+        now.setNewBoard(newBoard);
+        now.setOldBoard(oldBoard);
+        System.out.println(now.countPoints()); // 6
     }
 
     public static void main(String[] args) {
-        //testCheckRack();
-        //testCheckAllRLUP();
-        //testCheckLettersInRow();
+        testGenerateWordList();
+        testCheckOnTopOfExisting();
+        testCheckRack();
+        testCheckAllRLUP();
+        testCheckLettersInRow();
         testValidateBoard();
+        testCountPoints();
     }
 }
